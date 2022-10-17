@@ -5,6 +5,6 @@ export const encodePassword = (password: string): string => {
   return bcrypt.hashSync(password, salt)
 }
 
-export const isPasswordValid = (password: string, userPassword: string): boolean => {
+export const isMatches = (password: string, userPassword: string): boolean => {
   return bcrypt.compareSync(password, userPassword)
 }

@@ -13,7 +13,7 @@ services:
     environment:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-    # save (persist) data and also to share data between containers
+   # save (persist) data and also to share data between containers
     volumes:
       - ./data:/var/lib/mysql
     # database port

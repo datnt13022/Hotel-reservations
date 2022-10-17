@@ -1,0 +1,24 @@
+{
+  "extends": ["eslint:recommended", "plugin:adonis/typescriptApp", "plugin:prettier/recommended"],
+  "plugins": ["import"],
+  "rules": {
+    "no-unused-vars": "error",
+    "prettier/prettier": "error",
+    "no-useless-catch": "off",
+    "sort-imports": ["error", { "ignoreDeclarationSort": true, "ignoreCase": true }],
+    "import/order": [
+      "error",
+      {
+        "groups": ["external", "builtin", "internal", "sibling", "parent", "index"],
+        "newlines-between": "ignore",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+    // "no-console": "warning"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": "./tsconfig.json" }
+}
