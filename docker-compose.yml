@@ -1,0 +1,23 @@
+# docker compose version
+version: '3.7'
+# all the containers have to declare inside services
+services:
+
+  # Database service
+  hotel_db:
+    # pull image from docker hub
+    image: mysql:8.0.29
+    # always restart the container if it stops.
+    restart: unless-stopped
+    # database credentials, this is take value from env file
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    # save (persist) data and also to share data between containers
+    volumes:
+      - ./data:/var/lib/mysql
+    # database port
+    ports:
+      - "${DATABASE_PORT}:${DATABASE_PORT}"
+  
+  
