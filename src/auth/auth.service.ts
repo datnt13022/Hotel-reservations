@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from '@src/prisma/prisma.service';
 import { encodePassword, isMatches } from '@src/utils/password';
-import { AuthDto } from './dto';
+import { AdminFnDto, AuthDto } from './dto';
 import { JwtPayload, Token } from './types';
 
 @Injectable()
@@ -76,6 +76,72 @@ export class AuthService {
     const tokens = await this.getTokens(user.id, user.email,user.role);
     await this.updateRtHash(user.id, tokens.refresh_token);
     return tokens;
+  }
+  async adminLogin(authDto: AuthDto): Promise<Token> {
+    const user = await this.prisma.user.findUnique({
+        where: {
+          email: authDto.email,
+        },
+      });
+      if (user?.role!=0) throw new ForbiddenException('Permission denied!');
+      if (!user) throw new ForbiddenException('User Not Found!');
+      const passwordMatches = isMatches(authDto.password,user.hash);
+      if (!passwordMatches) throw new ForbiddenException('Wrong Password!');
+      const tokens = await this.getTokens(user.id, user.email,user.role);
+      await this.updateRtHash(user.id, tokens.refresh_token);
+      return tokens;
+  }
+  async adminCreate(role:number,adminFnDto:AdminFnDto):Promise<any>{
+    if (role!=0) throw new ForbiddenException('Permission denied!');
+    const hash = await encodePassword(adminFnDto.password);
+    const user = await this.prisma.user
+      .create({
+        data: {
+          email: adminFnDto.email,
+          hash,
+          role: adminFnDto.role,
+        },
+      })
+      .catch((error) => {
+        if (error instanceof PrismaClientKnownRequestError) {
+          if (error.code === 'P2002') {
+            throw new ForbiddenException('Email is exist !');
+          }
+        }
+        throw error;
+      });
+    return {message:"Create Success!"};
+  }
+  async adminDeleteById(role:number,id:number):Promise<any>{
+    if (role!=0) throw new ForbiddenException('Permission denied!');
+    const deleteUser = await this.prisma.user.delete({
+      where: {
+        id: Number(id),
+      },
+    }).catch((error) => {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new ForbiddenException('User to delete does not exist !');
+        }
+      }
+      throw error;
+    });
+    return {message:"Delete Success!"};
+  }
+  async adminGetAllUser(role:number){
+    if (role!=0) throw new ForbiddenException('Permission denied!');
+    const users = await this.prisma.user.findMany(
+      {  select: {
+           hash: false,
+           rt_hash: false,
+           id: true,
+           createAt: true,
+           updateAt: true,
+           email: true,
+           role: true
+          }});
+
+    return users;
   }
   async getTokens(userId: number, email: string, role: number): Promise<Token> {
     const jwtPayload: JwtPayload = {

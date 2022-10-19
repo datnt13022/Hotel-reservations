@@ -11,11 +11,14 @@ services:
     restart: unless-stopped
     # database credentials, this is take value from env file
     environment:
+      # TZ: "Asia/Ho_Chi_Minh"
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
    # save (persist) data and also to share data between containers
     volumes:
       - ./data:/var/lib/mysql
+      # - /etc/localtime:/etc/localtime:ro
+      # - /etc/timezone:/etc/timezone:ro
     # database port
     ports:
       - "${DATABASE_PORT}:${DATABASE_PORT}"

@@ -1,10 +1,10 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { Token } from './types';
-import { GetCurrentUser, GetCurrentUserId, Public } from './common/decorators';
-import { AtGuard, RtGuard } from './common/guards';
+import { GetCurrentUser, GetCurrentUserId, GetCurrentUserRole, Public } from './common/decorators';
+import {  RtGuard } from './common/guards';
+import { AdminFnDto } from './dto';
 
 @Controller('v1/auth')
 export class AuthController {
@@ -35,5 +35,34 @@ export class AuthController {
         @GetCurrentUser('refreshToken') refreshToken: string,
       ): Promise<Token> {
         return this.authService.refreshToken(userId, refreshToken);
+    }
+    @Public()
+    @Post('/admin/login')
+    adminLogin(@Body() authDto: AuthDto): Promise<Token> {
+       return this.authService.adminLogin(authDto);
+    }
+    @Post('/admin/logout')
+    @HttpCode(HttpStatus.OK)
+    adminLogout(@GetCurrentUserId() userId: number):Promise<any>{
+        return this.authService.logOut(userId);
+    }
+    @Post('/admin/create')
+    @HttpCode(HttpStatus.OK)
+    adminCreate(
+        @GetCurrentUserRole()role:number,
+        @Body() adminFnDto:AdminFnDto):Promise<any>{
+        return this.authService.adminCreate(role,adminFnDto);
+    }
+    @Post('/admin/delete/:id')
+    @HttpCode(HttpStatus.OK)
+    adminDeleteById(
+        @GetCurrentUserRole()role:number,
+        @Param('id') id:number):Promise<any>{
+        return this.authService.adminDeleteById(role,id);
+    }
+    @Get('/admin/user/all')
+    @HttpCode(HttpStatus.OK)
+    adminGetAllUser(@GetCurrentUserRole()role:number):Promise<any>{
+        return this.authService.adminGetAllUser(role);
     }
 }
