@@ -8,11 +8,13 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { GetCurrentUserRole } from '@src/auth/common/decorators';
 import { RoomDto } from './dto';
 import { RoomService } from './room.service';
 
 @Controller('/v1/room')
+@ApiTags('v1/room')
 export class RoomController {
   constructor(private roomService: RoomService) {}
 

@@ -5,8 +5,10 @@ import { Token } from './types';
 import { GetCurrentUser, GetCurrentUserId, GetCurrentUserRole, Public } from './common/decorators';
 import {  RtGuard } from './common/guards';
 import { AdminFnDto } from './dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('v1/auth')
+@ApiTags('v1/auth')
 export class AuthController {
     constructor(private authService:AuthService){}
     @Public()

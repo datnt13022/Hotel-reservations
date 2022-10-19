@@ -7,7 +7,8 @@ Demo Project
 - yarn install
 - npx prisma db seed
 
-
+- default api url http://localhost:3303/
+- api doc http://localhost:3303/api 
 ## ToDos
 - [x] management system for the administrator to list/create/edit/delete
 rooms consisting of type, description, image, quantity, and price.

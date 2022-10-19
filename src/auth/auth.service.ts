@@ -16,6 +16,7 @@ export class AuthService {
   ) {}
 
   async signUp(authDto: AuthDto): Promise<Token> {
+    
     const hash = await encodePassword(authDto.password);
     const user = await this.prisma.user
       .create({

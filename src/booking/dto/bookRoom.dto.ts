@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDate, IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
 
@@ -11,17 +12,22 @@ enum status {
 export class BookRoomDto {
   @Type(() => Date)
   @IsDate()
+  @ApiProperty()
   startDate: Date
   @Type(() => Date)
   @IsDate()
+  @ApiProperty()
   endDate: Date
   @IsNotEmpty()
   @IsNumber()
+  @ApiProperty()
   userId: Number;
   @IsNumber({}, { each: true })
+  @ApiProperty()
   roomIds: Number[]
   @IsNotEmpty()
   @IsEnum(status)
+  @ApiProperty()
   status: Number
 }
 

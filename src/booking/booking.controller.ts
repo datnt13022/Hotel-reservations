@@ -1,10 +1,13 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { GetCurrentUserId } from '@src/auth/common/decorators';
 import { BookingService } from './booking.service';
 import { BydateDto } from './dto';
 import { BookRoomDto } from './dto/bookRoom.dto';
 
 @Controller('/v1/booking')
+@ApiTags('v1/booking')
+
 export class BookingController {
     constructor(private bookingService: BookingService) {}
     @Get('/:date')
