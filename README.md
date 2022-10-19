@@ -5,8 +5,9 @@ Demo Project
 - Modify .env.example file to .env and config the corresponding information into .env file
 - docker-compose up
 - yarn install
+- npx prisma db push
 - npx prisma db seed
-
+- yarn start:dev
 - default api url http://localhost:3303/
 - api doc http://localhost:3303/api 
 ## ToDos
