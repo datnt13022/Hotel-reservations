@@ -4,6 +4,7 @@ import { GetCurrentUserId } from '@src/auth/common/decorators';
 import { BookingService } from './booking.service';
 import { BydateDto } from './dto';
 import { BookRoomDto } from './dto/bookRoom.dto';
+import { ByRangeDateDto } from './dto/getByRangeDate.dto';
 
 @Controller('/v1/booking')
 @ApiTags('v1/booking')
@@ -13,6 +14,10 @@ export class BookingController {
     @Get('/:date')
     getAvailableRoomByDate(@Param('date') date:string):Promise<any>{
         return this.bookingService.getAvailableRoomByDate(date);
+    }
+    @Post('/range')
+    getAvailableRoomByRange(@Body() byRangeDateDto:ByRangeDateDto){
+        return this.bookingService.getAvailableRoomByRange(byRangeDateDto);
     }
     @Post('/cancel/:id')
     cancelBooking(
