@@ -20,6 +20,6 @@ rooms consisting of type, description, image, quantity, and price.
 - [x] Administrator can login, logout and create/delete other administrator or chef
 - [x] Customer can sign up, sign in, signout
 - [x] Customer can edit any booking before the start date
-- [ ] API to list all the available rooms for any particular time frame in the future
+- [ ] API to list all the available rooms for any particular time frame in the future (update soon)
 - [ ] Support records of changes of the rooms for audit trail
 - [ ] Queue-integrated system that ensures that no more than one customer book at the same time
