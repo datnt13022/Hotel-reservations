@@ -1,4 +1,4 @@
-Demo Project
+Hotel reservations simple
 ## Follow these steps below to make sure the application running in the correct way
 
 - Make sure your local machine has been installed the docker, docker-compose
@@ -10,7 +10,7 @@ Demo Project
 - yarn start:dev
 - default api url http://localhost:3303/
 - api doc http://localhost:3303/api 
-## ToDos
+## To Do
 - [x] management system for the administrator to list/create/edit/delete
 rooms consisting of type, description, image, quantity, and price.
 - [x] API customer
@@ -21,5 +21,3 @@ rooms consisting of type, description, image, quantity, and price.
 - [x] Customer can sign up, sign in, signout
 - [x] Customer can edit any booking before the start date
 - [x] API to list all the available rooms for any particular time frame in the future
-- [ ] Support records of changes of the rooms for audit trail (in process)
-- [ ] Queue-integrated system that ensures that no more than one customer book at the same time
